@@ -1,0 +1,15 @@
+---
+:concurrency: 5
+development:
+  :concurrency: <%= ENV.fetch("SIDEKIQ_CONCURRENCY") { 5 } %>
+  :schedule:
+    cron_based_job:
+      cron: '*/5 * * * *' # Every 5 minutes
+      class: CronBasedJob
+    every_minute_job:
+      every: "1 minute"
+      class: EveryMinuteJob
+:queues:
+  - critical
+  - default
+  - low
